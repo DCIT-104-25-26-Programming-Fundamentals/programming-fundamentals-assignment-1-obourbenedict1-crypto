@@ -74,112 +74,91 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
-using namespace std;
 
-double add(double a, double b) {
-    return a + b;
-}
+def add(a, b):
+    return a + b
 
-double subtract(double a, double b) {
-    return a - b;
-}
 
-double multiply(double a, double b) {
-    return a * b;
-}
+def subtract(a, b):
+    return a - b
 
-bool divide(double a, double b, double &result) {
-    if (b == 0) {
-        return false;
-    }
-    result = a / b;
-    return true;
-}
 
-bool modulus(double a, double b, double &result) {
-    if (b == 0) {
-        return false;
-    }
-    result = fmod(a, b);
-    return true;
-}
+def multiply(a, b):
+    return a * b
 
-double exponent(double base, double exp) {
-    return pow(base, exp);
-}
 
-void printMenu() {
-    cout << "\n============================" << endl;
-    cout << "     SIMPLE CALCULATOR" << endl;
-    cout << "============================" << endl;
-    cout << "1. Addition" << endl;
-    cout << "2. Subtraction" << endl;
-    cout << "3. Multiplication" << endl;
-    cout << "4. Division" << endl;
-    cout << "5. Modulus" << endl;
-    cout << "6. Exponentiation" << endl;
-    cout << "7. Quit" << endl;
-}
+def divide(a, b):
+    """Return (result, error). error is None on success, or a message on failure."""
+    if b == 0:
+        return None, "Error: Cannot divide by zero."
+    return a / b, None
 
-int main() {
-    int choice;
-    double num1, num2, result;
 
-    cout << fixed << setprecision(2);
+def modulus(a, b):
+    """Return (result, error). error is None on success, or a message on failure."""
+    if b == 0:
+        return None, "Error: Cannot divide by zero."
+    return a % b, None
 
-    while (true) {
-        printMenu();
-        cout << "Select an operation (1-7): ";
-        cin >> choice;
 
-        if (choice == 7) {
-            cout << "Goodbye!" << endl;
-            break;
-        }
+def exponent(base, exp):
+    return base ** exp
 
-        if (choice < 1 || choice > 7) {
-            cout << "Error: Invalid choice. Please select 1-7." << endl;
-            continue;
-        }
 
-        cout << "Enter first number : ";
-        cin >> num1;
-        cout << "Enter second number: ";
-        cin >> num2;
+def print_menu():
+    print("\n============================")
+    print("     SIMPLE CALCULATOR")
+    print("============================")
+    print("1. Addition")
+    print("2. Subtraction")
+    print("3. Multiplication")
+    print("4. Division")
+    print("5. Modulus")
+    print("6. Exponentiation")
+    print("7. Quit")
 
-        switch (choice) {
-            case 1:
-                result = add(num1, num2);
-                cout << "Result: " << num1 << " + " << num2 << " = " << result << endl;
-                break;
-            case 2:
-                result = subtract(num1, num2);
-                cout << "Result: " << num1 << " - " << num2 << " = " << result << endl;
-                break;
-            case 3:
-                result = multiply(num1, num2);
-                cout << "Result: " << num1 << " * " << num2 << " = " << result << endl;
-                break;
-            case 4:
-                if (divide(num1, num2, result)) {
-                    cout << "Result: " << num1 << " / " << num2 << " = " << result << endl;
-                } else {
-                    cout << "Error: Cannot divide by zero." << endl;
-                }
-                break;
-            case 5:
-                if (modulus(num1, num2, result)) {
-                    cout << "Result: " << num1 << " % " << num2 << " = " << result << endl;
-                } else {
-                    cout << "Error: Cannot divide by zero." << endl;
-                }
-                break;
-            case 6:
-                result = exponent(num1, num2);
-                cout << "Result: " << num1 << " ^ " << num2 << " = " << result << endl;
-                break;
-        }
-    }
 
-    return 0;
-}
+def main():
+    while True:
+        print_menu()
+        choice = input("Select an operation (1-7): ")
+
+        if choice == "7":
+            print("Goodbye!")
+            break
+
+        if choice not in ("1", "2", "3", "4", "5", "6"):
+            print("Error: Invalid choice. Please select 1-7.")
+            continue
+
+        num1 = float(input("Enter first number : "))
+        num2 = float(input("Enter second number: "))
+
+        if choice == "1":
+            result = add(num1, num2)
+            print(f"Result: {num1:.2f} + {num2:.2f} = {result:.2f}")
+        elif choice == "2":
+            result = subtract(num1, num2)
+            print(f"Result: {num1:.2f} - {num2:.2f} = {result:.2f}")
+        elif choice == "3":
+            result = multiply(num1, num2)
+            print(f"Result: {num1:.2f} * {num2:.2f} = {result:.2f}")
+        elif choice == "4":
+            result, error = divide(num1, num2)
+            if error:
+                print(error)
+            else:
+                print(f"Result: {num1:.2f} / {num2:.2f} = {result:.2f}")
+        elif choice == "5":
+            result, error = modulus(num1, num2)
+            if error:
+                print(error)
+            else:
+                print(f"Result: {num1:.2f} % {num2:.2f} = {result:.2f}")
+        elif choice == "6":
+            result = exponent(num1, num2)
+            print(f"Result: {num1:.2f} ^ {num2:.2f} = {result:.2f}")
+
+
+if __name__ == "__main__":
+    main()
